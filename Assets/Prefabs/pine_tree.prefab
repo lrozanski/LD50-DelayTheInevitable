@@ -4920,3 +4920,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireParticles: {fileID: 4474217516264450527}
+  fireThreshold: 0
+  fireThresholdMax: 1

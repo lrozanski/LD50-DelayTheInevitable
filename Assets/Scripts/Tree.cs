@@ -19,18 +19,19 @@ public class Tree : MonoBehaviour {
     private void Start() {
         TileCell = MapManager.Instance.Tilemap.WorldToCell(transform.position);
 
-        if (Random.Range(0, 10) == 3) {
-            StartFire();
-        }
+        // if (Random.Range(0, 10) == 3) {
+        //     StartFire();
+        // }
     }
 
-    public void AddFireTick() => fireThreshold = Mathf.Min(fireThreshold + Time.deltaTime, fireThresholdMax);
+    public void AddFireTick(int tickValue) => fireThreshold = Mathf.Min(fireThreshold + tickValue, fireThresholdMax);
 
     #region Buttons
 
     [Button]
     public void StartFire() {
         fireParticles.Play();
+        TreeManager.Instance.TreesOnFire.Add(this);
     }
 
     #endregion

@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+[DefaultExecutionOrder(1)]
 public class TreeManager : SingletonMonoBehaviour<TreeManager> {
 
     [SerializeField, SceneObjectsOnly]
@@ -26,10 +27,15 @@ public class TreeManager : SingletonMonoBehaviour<TreeManager> {
     }
 
     public bool IsTreeOnFire(Vector3Int cell) => Trees[cell].IsOnFire;
-    public void AddFireTick(Vector3Int cell) {
+
+    public void AddFireTick(Vector3Int cell, int tickValue) {
+        if (!Trees.ContainsKey(cell)) {
+            // TODO: Add ditch logic
+            return;
+        }
         var tree = Trees[cell];
-        tree.AddFireTick();
-        
+        tree.AddFireTick(tickValue);
+
         if (tree.IsOnFire) {
             TreesOnFire.Add(tree);
             tree.StartFire();

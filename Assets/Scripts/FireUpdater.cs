@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+[DefaultExecutionOrder(100)]
 public class FireUpdater : SingletonMonoBehaviour<FireUpdater> {
 
     private readonly Queue<Vector3Int> open = new();
@@ -43,7 +44,7 @@ public class FireUpdater : SingletonMonoBehaviour<FireUpdater> {
         if (visited.Contains(targetCell) || !tilemap.HasTile(targetCell)) {
             return;
         }
-        TreeManager.Instance.AddFireTick(targetCell);
+        TreeManager.Instance.AddFireTick(targetCell, tickInterval / 1000);
         visited.Add(targetCell);
     }
 
