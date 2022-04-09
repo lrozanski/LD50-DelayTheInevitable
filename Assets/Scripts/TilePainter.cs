@@ -35,6 +35,14 @@ public class TilePainter : SingletonMonoBehaviour<TilePainter> {
         if (tile is Ditch || !Mouse.current.leftButton.wasPressedThisFrame) {
             return;
         }
+        PlaceDitch(cell);
+    }
+
+    private void PlaceDitch(Vector3Int cell) {
+        if (TreeManager.Instance.Trees.TryGetValue(cell, out var tree)) {
+            TreeManager.Instance.Trees.Remove(cell);
+            Destroy(tree.gameObject);
+        }
         tilemap.SetTile(cell, ditchTile);
     }
 
