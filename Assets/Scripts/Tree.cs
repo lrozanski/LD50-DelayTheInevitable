@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Tree : MonoBehaviour {
@@ -8,20 +6,25 @@ public class Tree : MonoBehaviour {
     [SerializeField, ChildGameObjectsOnly]
     private ParticleSystem fireParticles;
 
-    private Vector3Int tileCell;
+    [SerializeField, MaxValue(nameof(fireThresholdMax))]
+    private float fireThreshold;
+
+    [SerializeField, MinValue(nameof(fireThreshold))]
+    private float fireThresholdMax;
+
+    public Vector3Int TileCell { get; private set; }
+
+    public bool IsOnFire => fireThreshold >= fireThresholdMax;
 
     private void Start() {
-        tileCell = MapManager.Instance.Tilemap.WorldToCell(transform.position);
+        TileCell = MapManager.Instance.Tilemap.WorldToCell(transform.position);
 
         if (Random.Range(0, 10) == 3) {
             StartFire();
         }
     }
 
-    public void SpreadFire() {
-        var queue = new Queue<Vector3Int>();
-        var start = tileCell;
-    }
+    public void AddFireTick() => fireThreshold = Mathf.Min(fireThreshold + Time.deltaTime, fireThresholdMax);
 
     #region Buttons
 
